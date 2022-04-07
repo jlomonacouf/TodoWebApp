@@ -1,0 +1,1 @@
+export const BACKEND_ADDRESS: string = "http://localhost:3001/";
