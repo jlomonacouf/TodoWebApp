@@ -8,26 +8,40 @@ export default defineComponent({
     return {
       username: '',
       password: '',
+      confirmationPassword: '',
       email: '',
       firstName: '',
       lastName: '',
       usernameEmpty: false,
-      passwordEmpty: false,
       passwordInvalid: false,
+      passwordMismatch: false,
       emailEmpty: false,
       emailInvalid: false,
       loading: false
     }
   },
   methods: {
+    isPasswordInvalid(): boolean {
+      if(this.password.length < 8 || this.password.length > 25)
+        return true;
+      
+      var specialCharactersRegex = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+      if(specialCharactersRegex.test(this.password) === false)
+        return true;
+  
+
+      return false;
+    },
     login() {
       this.usernameEmpty = (this.username === '');
-      this.passwordEmpty = (this.password === '');
       this.emailEmpty = (this.email === '');
+      this.passwordMismatch = (this.password !== this.confirmationPassword);
 
-      if(this.usernameEmpty === true || this.passwordEmpty === true) return;
+      this.passwordInvalid = this.isPasswordInvalid();
 
-      this.loading = true;
+      if(this.usernameEmpty === true || this.emailEmpty === true || this.passwordInvalid === true) return;
+
+      /*this.loading = true;
 
       axios.post('/user/create_profile', {
         username: this.username,
@@ -39,7 +53,7 @@ export default defineComponent({
       }).catch(err => {
         this.passwordInvalid = true;
         this.loading = false;
-      });
+      });*/
     },
     goToLoginPage() {
       window.location.href = "/Login";
@@ -56,20 +70,29 @@ export default defineComponent({
       <div class="mt-4 bg-white shadow-md rounded-lg">
         <div class="h-2 bg-indigo-400 rounded-t-md"></div>
         <div class="px-8 py-6">
-          <label class="block font-semibold">Username</label>
+          <div class="flex space-x-3">
+            <div class="flex-col">
+              <label class="block font-semibold mt-2">First Name</label>
+              <input v-model="firstName" type="text" placeholder="First name" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="30">
+            </div>
+            <div class="flex-col">
+              <label class="block font-semibold mt-2">Last Name</label>
+              <input v-model="lastName" type="text" placeholder="Last name" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="50">
+            </div>
+          </div>
+          <label class="block font-semibold pt-1">Username</label>
           <p v-if="usernameEmpty" class="text-red-400 font-semibold">Please enter a username</p>
           <input v-model="username" type="text" placeholder="Username" class="border w-full h-5 px-3 py-5 mt-2 active:ring-indigo-700 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="25">
-          <label class="block font-semibold mt-2">Password</label>
-          <p v-if="passwordEmpty" class="text-red-400 font-semibold">Please enter a password</p>
-          <input v-model="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="50">
           <label class="block font-semibold mt-2">Email</label>
           <p v-if="emailEmpty" class="text-red-400 font-semibold">Please enter an email</p>
           <input v-model="email" type="text" placeholder="Email" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="50">
-          <!-- break up registration into two separate forms, then put options to enter first and last name in that form -->
-          <label class="block font-semibold mt-2">First Name</label>
-          <input v-model="firstName" type="text" placeholder="First name (Optional)" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="30">
-          <label class="block font-semibold mt-2">Last Name</label>
-          <input v-model="firstName" type="text" placeholder="First name (Optional)" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="50">
+          <label class="block font-semibold mt-2">Password</label>
+          <p v-if="passwordInvalid" class="text-red-400 font-semibold">Password must be between 8 and 25 letters</p>
+          <p v-if="passwordInvalid" class="text-red-400 font-semibold">Password must contain one number, one uppercase letter, and special character</p>
+          <input v-model="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="25">
+          <label class="block font-semibold mt-2">Re-enter Password</label>
+          <p v-if="passwordMismatch" class="text-red-400 font-semibold">Passwords do not match</p>
+          <input v-model="confirmationPassword" type="password" placeholder="Re-enter Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="25">
           <button @click="login()" type="submit" :disabled="loading" :class="{ 'opacity-50': loading }" class="mt-4 bg-indigo-500 text-white py-2 px-6 rounded-md hover:bg-indigo-600 active:bg-indigo-700">Get Started!</button>
         </div>
       </div>
