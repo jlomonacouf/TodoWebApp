@@ -20,13 +20,17 @@ export default defineComponent({
         <div class="mt-4 mx-24 bg-white shadow-md rounded-lg">
             <div class="h-2 rounded-t-md" style="background-color: #14b8a6" />
             <div class="px-8 py-6">
-                <div class="projectCard flex flex-col">
-                    <div class="projectImage bg-gray-300">
-                        <p class="text-8xl text-center">MFP</p>
-                    </div>
-                    <div class="projectText bg-red-500 font-bold">
-                        <p>My first Project!</p>
-                    </div>
+                <div class="grid">
+                    <div><img src="../assets/clock.svg" alt="">My first project</div>
+                    <div><img src="../assets/list-checkbox.svg" alt=""></div>
+                    <div><img src="../assets/logo.svg" alt=""></div>
+                    <div><img src="" alt=""></div>
+                    <div><img src="" alt=""></div>
+                    <div><img src="" alt=""></div>
+                    <div><img src="" alt=""></div>
+                    <div><img src="" alt=""></div>
+                    <div><img src="" alt=""></div>
+                    <div><img src="" alt=""></div>
                 </div>
             </div>
         </div>
@@ -36,6 +40,29 @@ export default defineComponent({
 <style scoped>
 .blackSvg {
     filter: invert(100%)
+}
+.grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.grid > div {
+    background: lightgray;
+    padding: 1rem;
+    display: grid;
+    place-items: center;
+}
+.grid > div::before {
+    content: "";
+    padding-top: 100%;
+    display: block;
+    grid-area: 1 / 1 / 2 / 2;
+}
+.grid > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    grid-area: 1 / 1 / 2 / 2;
 }
 .projectCard {
     width: 20%;
