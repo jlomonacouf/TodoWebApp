@@ -21,7 +21,13 @@ export default defineComponent({
             <div class="h-2 rounded-t-md" style="background-color: #14b8a6" />
             <div class="px-8 py-6">
                 <div class="grid">
-                    <div><img src="../assets/clock.svg" alt="">My first project</div>
+                    <div>
+                        <img src="../assets/clock.svg" alt="">
+                        <div class="projectDescription">
+                            <p>My first project</p>
+                            <p>10 assigned issues</p>
+                        </div>
+                    </div>
                     <div><img src="../assets/list-checkbox.svg" alt=""></div>
                     <div><img src="../assets/logo.svg" alt=""></div>
                     <div><img src="" alt=""></div>
@@ -43,7 +49,8 @@ export default defineComponent({
 }
 .grid {
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 15rem));
     gap: 1rem;
 }
 .grid > div {
@@ -57,6 +64,11 @@ export default defineComponent({
     padding-top: 100%;
     display: block;
     grid-area: 1 / 1 / 2 / 2;
+}
+.projectDescription {
+    padding-top: 1em;
+    width: 100%;
+    text-align: center;
 }
 .grid > div > img {
     width: 100%;

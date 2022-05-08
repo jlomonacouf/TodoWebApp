@@ -90,7 +90,7 @@ export default defineComponent({
           <p v-if="passwordInvalid" class="text-red-400 font-semibold">Password must be between 8 and 25 letters</p>
           <p v-if="passwordInvalid" class="text-red-400 font-semibold">Password must contain one number, one uppercase letter, and special character</p>
           <input v-model="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="25">
-          <label class="block font-semibold mt-2">Re-enter Password</label>
+          <label class="block font-semibold mt-2">Confirm Password</label>
           <p v-if="passwordMismatch" class="text-red-400 font-semibold">Passwords do not match</p>
           <input v-model="confirmationPassword" type="password" placeholder="Re-enter Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-md" maxlength="25">
           <button @click="login()" type="submit" :disabled="loading" :class="{ 'opacity-50': loading }" class="mt-4 bg-indigo-500 text-white py-2 px-6 rounded-md hover:bg-indigo-600 active:bg-indigo-700">Get Started!</button>
